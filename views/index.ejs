@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>personal Library</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles/stylesheet.css">
+
+</head>
+<body>
+<section class="bodyFrameAdd">
+    <form action="/add" method="post">
+        <button class="btn btn-warning btn-lg e">Add</button>
+    </form>
+    <form action="/sort" method="post">
+        
+        <button name="sorting" value="rating" class="btn btn-warning btn-lg">Sort by Rating</button>
+        <button name="sorting" value="racency"class="btn btn-warning btn-lg">Sort by Recency</button>
+    </form>
+</section>
+<section class="movies">
+
+<% items.forEach(element => { %>
+    <div class="movieNotes">
+        <div class="movieNotesI">
+            <img src="<%= element.img %>" alt="">
+            </div>
+        <div class="movieNotesA">
+        <h1 id="title<%= element.id %>" ><%= element.title %></h1>
+        <h6 id="author<%= element.id %>" >Author: <%= element.author %></h6>
+        <h6 id="rating<%= element.id %>" >Rating: <%= element.rating %></h6>
+        <h6 id="recency<%= element.id %>" >Recency: <%= element.recency%></h6>
+        <form action="/delete" method="post">
+        
+            <button name="deleteId" value="<%= element.id %>" class="btn btn-outline-dark btn-mm">Delete</button>
+       
+    </form>
+    </div>
+    <div class="movieNotesP">
+        <p id="para<%= element.id %>" ><%=element.para%></p>
+        <form class="edit"action="/edit" method="post">
+            <input type="hidden" name="updatedElementId" value="<%= element.id %>">
+            <input id="input<%=element.id%>" class="form_data" type="text" name="updatedElementPara" value="<%= element.para %>" autocomplete="off"
+            autofocus="true" hidden="true" />
+            <button id="done<%= element.id%>" class="btn btn-outline-dark btn-mm" type="submit" hidden>
+                Submit Edit
+              </button>
+        </form>
+        <button id="edit<%= element.id%>" class="edit btn btn-outline-dark btn-mm" onclick="handler('<%= element.id%>')">Edit</button>
+        </div>
+        
+     
+    </div>
+    <%}); %>
+    <script>
+        function handler(id){
+        document.getElementById("edit" + id).setAttribute("hidden", true)
+      document.getElementById("para" + id).setAttribute("hidden", true)
+      document.getElementById("done" + id).removeAttribute("hidden")
+      document.getElementById("input" + id).removeAttribute("hidden")
+        }
+    </script>
+</section>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+</html>
